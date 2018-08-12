@@ -1,3 +1,4 @@
+// DATABASE SETUP
 const pgpOptions = {}
 
 const pgp = require('pg-promise')(pgpOptions)
