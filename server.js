@@ -36,16 +36,11 @@ router.get('/', function(req, res) {
 });
 
 // TO DESCRIBE (accessed at GET http://localhost:5000/api/external_temp)
-// router.get('/external_temp', (req, res, next) => {
-//   db
-//     .any('SELECT * FROM temp_ext ORDER BY datetime DESC LIMIT 1')
-//     .then(data => {
-//       res.json(`${JSON.stringify(data)}`)
-//     })
-//     .catch(next)
-// });
+router.get('/external_temp', db.getExtTempLast);
 
-router.get('/external_temp', db.getLastExtTemp);
+// TO DESCRIBE (accessed at POST http://localhost:5000/api/external_temp)
+router.post('/external_temp', db.setExtTemp);
+
 // router.get('/api/puppies', db.getAllPuppies);
 // router.get('/api/puppies/:id', db.getSinglePuppy);
 // router.post('/api/puppies', db.createPuppy);
