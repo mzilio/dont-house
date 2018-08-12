@@ -29,6 +29,14 @@ pg_client.connect()
   .then(() => console.log('DB connected'))
   .catch(e => console.error('DB connection error', err.stack));
 
+pg_client.query('SELECT * FROM temp_ext;', (err, res) => {
+  if (err) throw err;
+  for (let row of res.rows) {
+    console.log(JSON.stringify(row));
+  }
+  pg_client.end();
+});
+
 // ROUTES FOR OUR API
 // =============================================================================
 
