@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 var port       = process.env.PORT || 5000; // set our port
 
 // DATABASE SETUP
-const { db } = require('database');
+const { db } = require('./database');
 // const { Client } = require('pg');
 //
 // const pg_client = new Client({
