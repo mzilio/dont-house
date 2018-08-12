@@ -49,13 +49,14 @@ router.get('/', function(req, res) {
 
 // TO DESCRIBE (accessed at GET http://localhost:5000/api/external_temp)
 router.get('/external_temp', function(req, res) {
-  pg_client.query('SELECT * FROM temp_ext ORDER BY datetime DESC LIMIT 1;', (err, res_query) => {
-    if (err) throw err;
-    for (let row of res_query.rows) {
-      res.send(JSON.stringify(row));
-    }
-    pg_client.end();
-  });
+  res.json({ message: 'Shown the external temperature!' });
+  // pg_client.query('SELECT * FROM temp_ext ORDER BY datetime DESC LIMIT 1;', (err, res_query) => {
+  //   if (err) throw err;
+  //   for (let row of res_query.rows) {
+  //     res.send(JSON.stringify(row));
+  //   }
+  //   pg_client.end();
+  // });
 });
 
 // REGISTER OUR ROUTES
