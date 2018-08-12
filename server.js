@@ -29,8 +29,6 @@ pg_client.connect()
   .then(() => console.log('DB connected'))
   .catch(e => console.error('DB connection error', err.stack));
 
-pg_client.query('SELECT * FROM temp_ext;', (err, res) => {
-
 // ROUTES FOR OUR API
 // =============================================================================
 
@@ -51,13 +49,13 @@ router.get('/', function(req, res) {
 
 // TO DESCRIBE (accessed at GET http://localhost:5000/api/external_temp)
 router.get('/external_temp', function(req, res) {
-  // pg_client.query('SELECT * FROM temp_ext ORDER BY datetime DESC LIMIT 1;', (err, res) => {
-  //   if (err) throw err;
-  //   for (let row of res.rows) {
-  //     res.json(JSON.stringify(row));
-  //   }
-  //   pg_client.end();
-  // });
+  pg_client.query('SELECT * FROM temp_ext ORDER BY datetime DESC LIMIT 1;', (err, res) => {
+    if (err) throw err;
+    for (let row of res.rows) {
+      res.json(JSON.stringify(row));
+    }
+    pg_client.end();
+  });
 });
 
 // REGISTER OUR ROUTES
