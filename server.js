@@ -17,17 +17,18 @@ app.use(bodyParser.json());
 var port       = process.env.PORT || 5000; // set our port
 
 // DATABASE SETUP
-const { Client } = require('pg');
-
-const pg_client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
-});
-
-// Handle the connection event
-pg_client.connect()
-  .then(() => console.log('DB connected'))
-  .catch(e => console.error('DB connection error', err.stack));
+const { db } = require('database');
+// const { Client } = require('pg');
+//
+// const pg_client = new Client({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: true,
+// });
+//
+// // Handle the connection event
+// pg_client.connect()
+//   .then(() => console.log('DB connected'))
+//   .catch(e => console.error('DB connection error', err.stack));
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -57,6 +58,15 @@ router.get('/external_temp', function(req, res) {
   //   }
   //   pg_client.end();
   // });
+});
+
+router.get('/postgres', (req, res, next) => {
+  db
+    .any('SELECT * FROM temp_ext ORDER BY datetime DESC LIMIT 1')
+    .then(data => {
+      res.json(`${req.path} fetched ${JSON.stringify(data)} from the database`)
+    })
+    .catch(next)
 });
 
 // REGISTER OUR ROUTES
