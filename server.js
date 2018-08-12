@@ -52,7 +52,7 @@ router.get('/external_temp', function(req, res) {
   pg_client.query('SELECT * FROM temp_ext ORDER BY datetime DESC LIMIT 1;', (err, res) => {
     if (err) throw err;
     for (let row of res.rows) {
-      res.json(JSON.stringify(row));
+      (JSON.stringify(row);
     }
     pg_client.end();
   });
