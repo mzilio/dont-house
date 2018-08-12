@@ -30,12 +30,6 @@ pg_client.connect()
   .catch(e => console.error('DB connection error', err.stack));
 
 pg_client.query('SELECT * FROM temp_ext;', (err, res) => {
-  if (err) throw err;
-  for (let row of res.rows) {
-    console.log(JSON.stringify(row));
-  }
-  pg_client.end();
-});
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -50,9 +44,20 @@ router.use(function(req, res, next) {
 	next();
 });
 
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
+// test route to make sure everything is working (accessed at GET http://localhost:5000/api)
 router.get('/', function(req, res) {
 	res.json({ message: 'hooray! welcome to our api!' });
+});
+
+// TO DESCRIBE (accessed at GET http://localhost:5000/api/external_temp)
+router.get('/external_temp', function(req, res) {
+  pg_client.query('SELECT * FROM temp_ext ORDER BY datetime DESC LIMIT 1;', (err, res) => {
+    if (err) throw err;
+    for (let row of res.rows) {
+      res.json(JSON.stringify(row));
+    }
+    pg_client.end();
+  });
 });
 
 // REGISTER OUR ROUTES
@@ -63,11 +68,3 @@ app.use('/api', router);
 // =============================================================================
 app.listen(port);
 console.log('Magic happens on port ' + port);
-
-//pg_client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
-//  if (err) throw err;
-//  for (let row of res.rows) {
-//    console.log(JSON.stringify(row));
-//  }
-//  pg_client.end();
-//});
