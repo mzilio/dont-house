@@ -15,6 +15,21 @@ function getExtTempLast(req, res, next) {
     });
 }
 
+function getExtTempAll(req, res, next) {
+  db.any('SELECT * FROM temp_ext ORDER BY datetime ASC')
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved all external temperature'
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
 function setExtTemp(req, res, next) {
   req.body.age = parseInt(req.body.age);
   db.none('INSERT INTO temp_ext(temp) VALUES(${temp})', req.body)
@@ -32,6 +47,7 @@ function setExtTemp(req, res, next) {
 
 module.exports = {
   getExtTempLast: getExtTempLast,
+  getExtTempAll: getExtTempAll,
   setExtTemp: setExtTemp
 };
 

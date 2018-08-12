@@ -1,6 +1,3 @@
-// BASE SETUP
-// =============================================================================
-
 // call the packages we need
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -17,9 +14,6 @@ app.use(bodyParser.json());
 
 var port = process.env.PORT || 5000; // set our port
 
-// ROUTES FOR OUR API
-// =============================================================================
-
 // create our router
 var router = express.Router();
 
@@ -35,8 +29,11 @@ router.get('/', function(req, res) {
 	res.json({ message: 'hooray! welcome to our api!' });
 });
 
-// TO DESCRIBE (accessed at GET http://localhost:5000/api/external_temp)
-router.get('/external_temp', db.getExtTempLast);
+// TO DESCRIBE (accessed at GET http://localhost:5000/api/external_temp_last)
+router.get('/external_temp_last', db.getExtTempLast);
+
+// TO DESCRIBE (accessed at GET http://localhost:5000/api/external_temp_all)
+router.get('/external_temp_all', db.getExtTempAll);
 
 // TO DESCRIBE (accessed at POST http://localhost:5000/api/external_temp)
 router.post('/external_temp', db.setExtTemp);
@@ -47,11 +44,9 @@ router.post('/external_temp', db.setExtTemp);
 // router.put('/api/puppies/:id', db.updatePuppy);
 // router.delete('/api/puppies/:id', db.removePuppy);
 
-// REGISTER OUR ROUTES
-// =============================================================================
+// register our routes
 app.use('/api', router);
 
-// START THE SERVER
-// =============================================================================
+// start the server
 app.listen(port);
 console.log('Magic happens on port ' + port);
