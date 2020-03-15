@@ -49,4 +49,4 @@ app.use('/api', router);
 
 // start the server
 app.listen(port);
-console.log('Magic happens on port ' + port);
+console.log('Server started on port ' + port);
