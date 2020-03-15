@@ -32,7 +32,7 @@ function getExtTempAll(req, res, next) {
 
 function setExtTemp(req, res, next) {
   req.body.age = parseInt(req.body.age);
-  db.none('INSERT INTO temp_ext(temp) VALUES(${temp})', req.body)
+  db.none('INSERT INTO temp_ext(sensor_id, temperature, humidity) VALUES(${sensor_id}, ${temperature}, ${humidity})', req.body)
     .then(function () {
       res.status(200)
         .json({
